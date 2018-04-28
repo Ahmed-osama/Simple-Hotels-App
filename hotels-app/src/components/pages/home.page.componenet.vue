@@ -7,13 +7,13 @@
               <h4 class="white_color">i want to book :</h4>
             </div>
             <div class="col-md-4">
-              <datepicker  :format="formatDate" v-model="from_date" placeholder="start date"></datepicker>
+              <datepicker   @selected="setFrom" placeholder="start date"></datepicker>
             </div>
             <div class="col-md-1 u-flex-center date-zone__to">
               to
             </div>
             <div class="col-md-4">
-              <datepicker :format="formatDate"  v-model="to_date" placeholder="End Date"></datepicker>
+              <datepicker   @selected="setTo" placeholder="End Date"></datepicker>
             </div>
             <div class="col-md-3">
               <a class="btn btn--block yellow_bg" @click.prevent="getResults()">
@@ -31,6 +31,7 @@
 <script>
 // https://github.com/charliekassel/vuejs-datepicker
 import Datepicker from 'vuejs-datepicker'
+import util from '../../modules/utility'
 /* eslint-disable */
 export default {
   name: 'home',
@@ -46,30 +47,25 @@ export default {
     }
   },
   methods: {
-    formatDate(date) {
-      date = new Date(date)
-      let dd = date.getDate()
-      let mm = date.getMonth() + 1
-      let yyyy = date.getFullYear()
-      dd = dd < 10 ? '0' + dd : dd
-      mm = mm < 10 ? '0' + mm : mm
-      return dd + '-' + mm + '-' + yyyy
+    setdate (dir, value){
+      value = this.formatDate(value)
+      this.$store.commit('setUserDate',{ 
+        value : value,
+        dir:dir
+      })
     },
-    toDate(date) {
-      let parts = date.split("-");
-      return new Date(parts[2], parts[1] - 1, parts[0]);
+    setFrom (e){
+      this.setdate('from', e)
     },
+    setTo(e){
+      this.setdate('to', e)
+    },
+    formatDate: util.formatDate,
+    toDate: util.toDate,
+    // isDateInRange: util.isDateInRange,
     getResults (){
       this.$router.push('results')
     },
-    isDateInRange (userRange, AvilableRange){
-      let userFrom = this.toDate(userRange.from)
-      let userTo = this.toDate(userRange.to)
-
-      let avilableFrom = this.toDate(AvilableRange.from)
-      let avilableTo = this.toDate(AvilableRange.to)
-      return (userFrom>=avilableFrom && userTo<= avilableTo)
-    }
   }
 };
 </script>

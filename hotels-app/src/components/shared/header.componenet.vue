@@ -17,13 +17,12 @@
         </div>
         <div class="main-header__menuCloser" id="menuCloser"></div>
         <div class="main-header__search" id="searchForm">
-          <form class="main-header__searchForm">
-            <input class="main-header__searchInput" placeholder="what do you look for?"/>
+          <div class="main-header__searchForm">
+            <input class="main-header__searchInput" @keyup.enter.prevent="setSearchKeyword" placeholder="what do you look for?"/>
             <svg class="u-icon  main-header__searchIcon ">
               <use xlink:href="../../../static/img/icons.svg#icon-search"></use>
             </svg>
-            <input type="submit" hidden="hidden"/>
-          </form>
+          </div>
         </div><a class="main-header__searchButton" id="searchButton" href="#">
           <svg class="u-icon  main-header__searchButtonIcon ">
             <use xlink:href="../../../static/img/icons.svg#icon-search"></use>
@@ -41,6 +40,12 @@ export default {
   data () {
     return {
       msg: 'Results'
+    }
+  },
+  methods: {
+    setSearchKeyword (e) {
+      this.$router.push('results')
+      this.$store.commit('setSearchKeyword', e.target.value)
     }
   }
 }

@@ -5,7 +5,7 @@
       <a class="post-view__padge red_bg btn" href="#">{{hotel.city}}</a>
       <h4 class="post-view__maxTitle">{{hotel.name}}</h4>
       <h6 class="post-view__item">
-         <strong class="post-view__price"> {{ hotel.price }}$ </strong>
+         <strong class="post-view__price"> {{ totalcost }}$ </strong>
          <span> per nights</span>
       </h6>
       <div class="post-view__avilability">
@@ -26,12 +26,18 @@ export default {
       type: Object
     }
   },
+  computed: {
+    totalcost: function (params) {
+      return Math.round(this.hotel.price * this.$store.getters.daysLength)
+    }
+  },
   data () {
     return {
       msg: 'Results'
     }
   }
 }
+/* eslint-disable */
 </script>
 
 <style scoped>
