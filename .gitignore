@@ -1,8 +1,8 @@
 .DS_Store
-node_modules/
-dist/
-npm-debug.log
-yarn-error.log
+hotels-app/node_modules/
+hotels-app/dist/
+hotels-app/npm-debug.log
+hotels-app/yarn-error.log
 
 # Editor directories and files
 .idea
