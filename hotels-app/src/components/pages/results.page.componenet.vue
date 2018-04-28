@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="col-md-9">
-          <div class="heading  heading--borderbottom">
+          <div class="heading   ">
             <h4 class="heading__title">total nights : {{daysLength}} </h4>
             <div class="heading__more">
               <select v-model="nameSort" @change="changeNameSort">
@@ -43,27 +43,22 @@
               </select>
             </div>
           </div>
-          <div class="row">
-            <transition-group class="flex flex--wrap col-xs-12" name="fade">
-              <div class="col-md-4" v-for='(hotel, index) in hotels' :key="index">
-                <card :hotel = "hotel" />
-              </div>
-            </transition-group>
-          </div>
-          <transition name="expand-fade">
-            <div class="row"  v-if="loading">
-              <div class="col-xs-12  loading-div loading-div--row loading-div--centered loading-div--page"></div>
+          <transition-group class="row" name="fade">
+            <div class="col-md-4" v-for='(hotel, index) in hotels' :key="index">
+              <card :hotel = "hotel" />
             </div>
-          </transition>
-          <transition name="expand-fade">
-            <div class=""  v-if="!loading && hotels.length == 0">
+            <div v-if="loading" class="col-xs-12  loading-div loading-div--row loading-div--centered loading-div--page" key="loading"></div>
+            <div class="col-xs-12"  v-if="!loading && hotels.length == 0" key="msg">
               <div class="msg msg--note">
                 sorry we cant find hotels
-                <p v-if="searchKeyword != ''">includes keyword "{{searchKeyword}}"</p>
-                <p v-if="priceSpan.userSelection != null">and price equal or grater than "{{priceSpan.userSelection}}"</p>
+                <p v-if="searchKeyword != ''">includes keyword "<span class="red_color">{{searchKeyword}}</span>"</p>
+                <p v-if="priceSpan.userSelection != null">and price equal or grater than "<span class="red_color">{{priceSpan.userSelection}}</span>"</p>
+                <p v-if="userDate">betweeen <span class="red_color">{{userDate.from}}</span> and <span class="red_color">{{userDate.to}}</span></p>
+                <router-link :to="{ path: '/' }" class="btn btn--sm red_bg">reset dates</router-link>
               </div>
             </div>
-          </transition>
+          </transition-group>
+         
         </div>
       </div>
     </div>
@@ -78,7 +73,6 @@ export default {
   name: 'results',
   data () {
     return {
-      loading: true,
       nameSort: '',
       priceSort: ''
     }
@@ -94,11 +88,17 @@ export default {
     hotels: function () {
       return this.$store.getters.filteredHotels
     },
+    loading: function () {
+      return this.$store.state.loading
+    },
     priceSpan: function () {
       return this.$store.state.priceSpan
     },
     searchKeyword () {
       return this.$store.state.searchKeyword
+    },
+    userDate () {
+      return this.$store.state.userDate
     }
   },
   methods: {

@@ -6,9 +6,10 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+    loading: true,
     userDate: {
-      from: '',
-      to: ''
+      from: '10-10-2020',
+      to: '20-12-2020'
     },
     hotels: [],
     priceSpan: {
@@ -29,6 +30,7 @@ export const store = new Vuex.Store({
           .then((result) => {
             state.hotels.push(...result.data.hotels)
             this.commit('setPrice')
+            this.commit('setLoading', false)
           })
       }
     },
@@ -48,6 +50,9 @@ export const store = new Vuex.Store({
     },
     setSortType (state, payload) {
       state.sortType = payload
+    },
+    setLoading (state, payload) {
+      state.loading = payload
     }
   },
   getters: {
@@ -58,7 +63,14 @@ export const store = new Vuex.Store({
     },
     filteredHotels: (state, getters) => {
       return state.hotels.filter(item => {
-        return (item.price >= (state.priceSpan.userSelection / getters.daysLength) && (item.name.toLowerCase().includes(state.searchKeyword.toLowerCase()) || item.city.toLowerCase().includes(state.searchKeyword.toLowerCase())))
+        let priceFilter = item.price >= (state.priceSpan.userSelection / getters.daysLength)
+        let searchFilter = item.name.toLowerCase().includes(state.searchKeyword.toLowerCase()) || item.city.toLowerCase().includes(state.searchKeyword.toLowerCase())
+        let hasDateInRange = false
+        item.availability.forEach(date => {
+          date.inrange = utils.isDateInRange(state.userDate, date)
+          if (date.inrange) hasDateInRange = true
+        })
+        return priceFilter && searchFilter && hasDateInRange
       }).sort(utils.sortby[state.sortType])
     }
   }

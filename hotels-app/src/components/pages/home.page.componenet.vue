@@ -7,13 +7,27 @@
               <h4 class="white_color">i want to book :</h4>
             </div>
             <div class="col-md-4">
-              <datepicker   @selected="setFrom" placeholder="start date"></datepicker>
+              <div class="input-container">
+                <div class="input-container__tip">
+                  <svg class="u-icon">
+                    <use xlink:href="../../../static/img/icons.svg#icon-calendar"></use>
+                  </svg>
+                </div>
+                <datepicker :open-date="openDate" :disabledDates="deisabledDatesFrom"  @selected="setFrom" placeholder="start date"></datepicker>
+              </div>
             </div>
             <div class="col-md-1 u-flex-center date-zone__to">
               to
             </div>
             <div class="col-md-4">
-              <datepicker   @selected="setTo" placeholder="End Date"></datepicker>
+              <div class="input-container">
+                <div class="input-container__tip">
+                  <svg class="u-icon">
+                    <use xlink:href="../../../static/img/icons.svg#icon-calendar"></use>
+                  </svg>
+                </div>
+                <datepicker :open-date="openDate"   @selected="setTo" placeholder="End Date"></datepicker>
+              </div>
             </div>
             <div class="col-md-3">
               <a class="btn btn--block yellow_bg" @click.prevent="getResults()">
@@ -40,10 +54,14 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      from_date: '',
-      to_date: '',
-      formate_date: ''
+      deisabledDatesFrom: {
+        to: this.openDate
+      }
+    }
+  },
+  computed: {
+    openDate: function() {
+      return new Date(this.toDate('10-10-2020'))
     }
   },
   methods: {
@@ -89,5 +107,13 @@ datepicker {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
+}
+.input-container__tip {
+  right: 5px;
+}
+.input-container__tip .u-icon{
+  height: 1.4em;
+  width: 1.5em;
+  opacity: 0.3;
 }
 </style>

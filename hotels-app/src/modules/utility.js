@@ -13,17 +13,17 @@ export default {
     return new Date(parts[2], parts[1] - 1, parts[0])
   },
   isDateInRange (userRange, AvilableRange) {
-    let userFrom = this.toDate(userRange.from)
-    let userTo = this.toDate(userRange.to)
-    let avilableFrom = this.toDate(AvilableRange.from)
-    let avilableTo = this.toDate(AvilableRange.to)
+    let userFrom = this.toDate(userRange.from).getTime()
+    let userTo = this.toDate(userRange.to).getTime()
+    let avilableFrom = this.toDate(AvilableRange.from).getTime()
+    let avilableTo = this.toDate(AvilableRange.to).getTime()
+    console.log(userFrom, userTo, avilableFrom, avilableTo, userFrom >= avilableFrom && userTo <= avilableTo)
+
     return (userFrom >= avilableFrom && userTo <= avilableTo)
   },
   getDaysLengthBetween (startDate, EndDate) {
-    console.log(startDate, EndDate)
     startDate = this.toDate(startDate).getTime()
     EndDate = this.toDate(EndDate).getTime()
-    console.log(startDate, EndDate)
     return Math.round((EndDate - startDate) / 1000 / 60 / 60 / 24)
   },
   sortby: {
