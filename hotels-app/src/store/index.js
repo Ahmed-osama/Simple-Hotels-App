@@ -31,6 +31,8 @@ export const store = new Vuex.Store({
             state.hotels.push(...result.data.hotels)
             this.commit('setPrice')
             this.commit('setLoading', false)
+          }).catch(error => {
+            console.log(error)
           })
       }
     },
