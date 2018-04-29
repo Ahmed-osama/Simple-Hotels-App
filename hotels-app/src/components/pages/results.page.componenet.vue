@@ -45,9 +45,6 @@
             </div>
           </div>
           <transition-group class="row" name="fade">
-            <div class="col-md-4" v-for='(hotel, index) in hotels' :key="index">
-              <card :hotel = "hotel"/>
-            </div>
             <div v-if="loading && !connectionError.state" class="col-xs-12  loading-div loading-div--row loading-div--centered loading-div--page" key="loading"></div>
             <div class="col-xs-12"  v-if="!loading && hotels.length == 0 && !connectionError.state" key="msg">
               <div class="msg msg--note">
@@ -64,6 +61,9 @@
                 <p v-if="connectionError.type == 'noreRponse'">request sent but server didnt response</p>
                 <p v-if="connectionError.type == 'networkError'">seems to be network issue</p>
               </div>
+            </div>
+            <div class="col-md-4" v-for='(hotel, index) in hotels' :key="index">
+              <card :hotel = "hotel"/>
             </div>
           </transition-group>
         </div>
