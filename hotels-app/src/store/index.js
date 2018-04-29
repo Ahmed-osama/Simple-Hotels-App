@@ -73,6 +73,9 @@ export const store = new Vuex.Store({
           })
         } else {
           hasDateInRange = true
+          item.availability.forEach(date => {
+            date.inrange = 'nostate'
+          })
         }
         return priceFilter && searchFilter && hasDateInRange
       }).sort(utils.sortby[state.sortType])

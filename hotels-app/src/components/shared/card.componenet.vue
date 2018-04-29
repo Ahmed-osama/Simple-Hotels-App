@@ -13,8 +13,9 @@
             v-for="(date,index) of hotel.availability"
             :key="index"
             :class="{
-              'post-view__avilabilityItem--avilable':date.inrange,
+              'post-view__avilabilityItem--avilable':date.inrange && date.inrange != 'nostate',
               'post-view__avilabilityItem--not':!date.inrange,
+              ' ':date.inrange == 'nostate'
             }"
           >
             <div class="post-view__avilabilityItem">{{date.from}}</div>
