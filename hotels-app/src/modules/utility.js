@@ -17,8 +17,6 @@ export default {
     let userTo = this.toDate(userRange.to).getTime()
     let avilableFrom = this.toDate(AvilableRange.from).getTime()
     let avilableTo = this.toDate(AvilableRange.to).getTime()
-    console.log(userFrom, userTo, avilableFrom, avilableTo, userFrom >= avilableFrom && userTo <= avilableTo)
-
     return (userFrom >= avilableFrom && userTo <= avilableTo)
   },
   getDaysLengthBetween (startDate, EndDate) {

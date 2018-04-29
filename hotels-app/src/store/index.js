@@ -66,10 +66,14 @@ export const store = new Vuex.Store({
         let priceFilter = item.price >= (state.priceSpan.userSelection / getters.daysLength)
         let searchFilter = item.name.toLowerCase().includes(state.searchKeyword.toLowerCase()) || item.city.toLowerCase().includes(state.searchKeyword.toLowerCase())
         let hasDateInRange = false
-        item.availability.forEach(date => {
-          date.inrange = utils.isDateInRange(state.userDate, date)
-          if (date.inrange) hasDateInRange = true
-        })
+        if (state.userDate.to !== '' && state.userDate.from !== '') {
+          item.availability.forEach(date => {
+            date.inrange = utils.isDateInRange(state.userDate, date)
+            if (date.inrange) hasDateInRange = true
+          })
+        } else {
+          hasDateInRange = true
+        }
         return priceFilter && searchFilter && hasDateInRange
       }).sort(utils.sortby[state.sortType])
     }

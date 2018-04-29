@@ -83,11 +83,13 @@ export default {
     border-top: 1px solid #f2f2f2;
   }
   .post-view__avilabilityItem{
+    flex-basis: 50%;
      align-items: center;
     justify-content: center;
     font-size: 12px;
     color:#bcbcbc;
     padding:10px 20px;
+    text-align: center;
     
   }
   .post-view__avilabilityItem--avilable {

@@ -29,7 +29,8 @@
         </div>
         <div class="col-md-9">
           <div class="heading   ">
-            <h4 class="heading__title">total nights : {{daysLength}} </h4>
+            <h4 class="heading__title">total nights  <span class="btn btn--sm btn--round red_bg">{{daysLength}}</span> </h4>
+             <span v-if="userDate.to !== ''  && userDate.from !== ''" class="heading__middle">from :  {{userDate.from}} to {{userDate.to}}</span>
             <div class="heading__more">
               <select v-model="nameSort" @change="changeNameSort">
                 <option value="" disabled selected> sort by name</option>
@@ -58,7 +59,6 @@
               </div>
             </div>
           </transition-group>
-         
         </div>
       </div>
     </div>
@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     setMinPrice (e) {
-      console.log(e)
       this.$store.commit('setMinPrice', e)
     },
     setSearchKeyword (e) {
@@ -124,14 +123,14 @@ export default {
   watch: {
     hotels: function () {
       if (this.hotels.length > 0) {
-        this.loading = false
+        this.$store.commit('setLoading', false)
       }
     }
   },
   mounted () {
     this.$store.commit('setHotels')
     if (this.hotels.length > 0) {
-      this.loading = false
+      this.$store.commit('setLoading', false)
     }
   }
 }
