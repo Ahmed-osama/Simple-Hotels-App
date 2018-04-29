@@ -18,7 +18,11 @@ export const store = new Vuex.Store({
       userSelection: null
     },
     searchKeyword: '',
-    sortType: ''
+    sortType: '',
+    connectionError: {
+      state: false,
+      type: 'notFound'
+    }
   },
   mutations: {
     setUserDate (state, payload) {
@@ -32,7 +36,22 @@ export const store = new Vuex.Store({
             this.commit('setPrice')
             this.commit('setLoading', false)
           }).catch(error => {
-            console.log(error)
+            if (error.response) {
+              this.commit('setConnectionError', {
+                state: true,
+                type: 'notFound'
+              })
+            } else if (error.request) {
+              this.commit('setConnectionError', {
+                state: true,
+                type: 'noreRponse'
+              })
+            } else {
+              this.commit('setConnectionError', {
+                state: true,
+                type: 'networkError'
+              })
+            }
           })
       }
     },
@@ -55,6 +74,9 @@ export const store = new Vuex.Store({
     },
     setLoading (state, payload) {
       state.loading = payload
+    },
+    setConnectionError (state, payload) {
+      state.connectionError = payload
     }
   },
   getters: {

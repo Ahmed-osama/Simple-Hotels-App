@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="col-md-9">
-          <div class="heading   ">
+          <div class="heading">
             <h4 class="heading__title">total nights  <span class="btn btn--sm btn--round red_bg">{{daysLength}}</span> </h4>
              <span v-if="userDate.to !== ''  && userDate.from !== ''" class="heading__middle">from :  {{userDate.from}} to {{userDate.to}}</span>
             <div class="heading__more">
@@ -46,16 +46,23 @@
           </div>
           <transition-group class="row" name="fade">
             <div class="col-md-4" v-for='(hotel, index) in hotels' :key="index">
-              <card :hotel = "hotel" />
+              <card :hotel = "hotel"/>
             </div>
-            <div v-if="loading" class="col-xs-12  loading-div loading-div--row loading-div--centered loading-div--page" key="loading"></div>
-            <div class="col-xs-12"  v-if="!loading && hotels.length == 0" key="msg">
+            <div v-if="loading && !connectionError.state" class="col-xs-12  loading-div loading-div--row loading-div--centered loading-div--page" key="loading"></div>
+            <div class="col-xs-12"  v-if="!loading && hotels.length == 0 && !connectionError.state" key="msg">
               <div class="msg msg--note">
                 sorry we cant find hotels
                 <p v-if="searchKeyword != ''">includes keyword "<span class="red_color">{{searchKeyword}}</span>"</p>
                 <p v-if="priceSpan.userSelection != null">and price equal or grater than "<span class="red_color">{{priceSpan.userSelection}}</span>"</p>
                 <p v-if="userDate">betweeen <span class="red_color">{{userDate.from}}</span> and <span class="red_color">{{userDate.to}}</span></p>
                 <router-link :to="{ path: '/' }" class="btn btn--sm red_bg">reset dates</router-link>
+              </div>
+            </div>
+            <div class="col-xs-12"  v-if="connectionError.state" key="msg2">
+              <div class="msg msg--error">
+                <p v-if="connectionError.type == 'notFound'">server responded & the request is not found</p>
+                <p v-if="connectionError.type == 'noreRponse'">request sent but server didnt response</p>
+                <p v-if="connectionError.type == 'networkError'">seems to be network issue</p>
               </div>
             </div>
           </transition-group>
@@ -99,6 +106,9 @@ export default {
     },
     userDate () {
       return this.$store.state.userDate
+    },
+    connectionError () {
+      return this.$store.state.connectionError
     }
   },
   methods: {
