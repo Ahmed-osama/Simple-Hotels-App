@@ -54,6 +54,7 @@ export default {
         value: '',
         dir: 'from'
       })
+      this.$store.commit('setMinPrice', 0)
     }
   }
 }
