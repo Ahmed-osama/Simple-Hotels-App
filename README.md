@@ -44,7 +44,7 @@ npm run build
 ```
 
 ## Built With
-*[frontcodes](https://github.com/Ahmed-osama/FrontCodes) - my own css liberary (check it out)
-*vue
-*axios
-*jest
+* [frontcodes](https://github.com/Ahmed-osama/FrontCodes) - my own css liberary (check it out)
+* vue
+* axios
+* jest
