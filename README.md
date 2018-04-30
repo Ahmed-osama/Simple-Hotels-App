@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/Ahmed-osama/Simple-Hotels-App.svg?branch=master)](https://travis-ci.org/Ahmed-osama/Simple-Hotels-App)
 
-simple hotels booking app consums basic api
+simple hotels booking app consums basic api | [Demo](http://tajawal.surge.sh/)
 
 ## Getting Started
 
@@ -44,6 +44,7 @@ npm run build
 ```
 
 ## Built With
+
 * [frontcodes](https://github.com/Ahmed-osama/FrontCodes) - my own css liberary (check it out)
 * vue
 * axios
